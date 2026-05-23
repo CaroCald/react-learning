@@ -13,8 +13,8 @@ import './index.css'
 // import { MemoCounter } from './06-memos/MemoCounter'
 // import { InstagromApp } from './07-useOptimistic/instangramApp'
 // import { Toaster } from 'sonner';
-import { ClientInformation } from './08-use-suspense/ClientInformation'
-import { getUserAction } from './08-use-suspense/api/get-user.action'
+import { ProfesionalApp } from './09-useContext/ProfesionalApp'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {/* <Toaster /> */}
@@ -27,7 +27,7 @@ createRoot(document.getElementById('root')!).render(
     {/* <MemoHook /> */}
     {/* <MemoCounter></MemoCounter> */}
     {/* <InstagromApp></InstagromApp> */}
-    <Suspense
+    {/* <Suspense
       fallback={
         <div className="bg-gradient flex flex-col">
           <h1 className="text-2xl">Cargando</h1>
@@ -35,6 +35,7 @@ createRoot(document.getElementById('root')!).render(
       }
     >
       <ClientInformation getUser={getUserAction(1001)} />
-    </Suspense>
+    </Suspense> */}
+    <ProfesionalApp></ProfesionalApp>
   </StrictMode>,
 )

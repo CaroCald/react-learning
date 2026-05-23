@@ -3,6 +3,10 @@ import type { User } from './api/get-user.action';
 interface Props {
     getUser: Usable<User>;
 }
+
+//usable algo q resuelve una promesa
+
+// es como si usara el await ==> el use
 export const ClientInformation = ({ getUser }: Props) => {
     const user = use(getUser);
     return (
