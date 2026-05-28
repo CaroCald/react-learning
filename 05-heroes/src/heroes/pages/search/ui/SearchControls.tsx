@@ -95,13 +95,7 @@ export const SearchControls = () => {
             </div>
 
             {/* Advanced Filters */}
-            <Accordion
-                openItems={activeAccordion ? [activeAccordion] : []}
-                onOpenItemsChange={(items) => {
-                    const last = items.find(i => i !== activeAccordion) ?? '';
-                    setQueryParams('active-accordion', last);
-                }}
-            >
+            <Accordion defaultValue={[activeAccordion]}>
                 <AccordionItem value="advance-filters">
                     {/* <AccordionTrigger>Filtros avanzados</AccordionTrigger> */}
                     <AccordionContent>
