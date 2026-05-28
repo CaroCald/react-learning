@@ -5,6 +5,8 @@ import { Progress } from "@/components/ui/progress"
 import { Brain, Eye, Gauge, Heart, Shield, Zap } from "lucide-react"
 import type { Hero } from "../interfaces/heroe.interface"
 import { useNavigate } from "react-router"
+import { use } from "react"
+import { FavoriteHeroeContext } from "../context/FavoriteHeroeContext"
 
 interface HeroeGridCardProps {
     hero: Hero
@@ -13,13 +15,14 @@ interface HeroeGridCardProps {
 
 export const HeroeGridCard = ({ hero }: HeroeGridCardProps) => {
     const navigate = useNavigate()
+    const { isFavoriteHeroe, toggleFavoriteHeroe } = use(FavoriteHeroeContext)
 
     const handleClick = () => {
         navigate(`/heroe/${hero.slug}`)
     }
 
     return (
-        <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-white to-gray-50">
+        <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-linear-to-br from-white to-gray-50">
             <div className="relative ">
                 <img
                     src={hero.image}
@@ -40,8 +43,10 @@ export const HeroeGridCard = ({ hero }: HeroeGridCardProps) => {
                 <Badge className="absolute top-3 right-3 text-xs bg-blue-600 text-white">DC</Badge>
 
                 {/* Favorite button */}
-                <Button size="sm" variant="ghost" className="absolute bottom-3 right-3 bg-white/90 hover:bg-white">
-                    <Heart className="h-4 w-4 fill-red-500 text-red-500" />
+                <Button
+                    onClick={() => toggleFavoriteHeroe(hero)}
+                    size="sm" variant="ghost" className="absolute bottom-3 right-3 bg-white/90 hover:bg-white">
+                    <Heart className={isFavoriteHeroe(hero) ? "h-4 w-4 fill-red-500 text-red-500" : "text-gray-600"} />
                 </Button>
 
                 {/* View details button */}

@@ -4,13 +4,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CustomJumbotron } from "@/heroes/custom/CustomJumbotron"
 import { HeroeStats } from "@/heroes/components/HeroeStats"
 import { HeroGrid } from "@/heroes/components/HeroGrid"
-import { useMemo } from "react"
+import { use, useMemo } from "react"
 import { CustomPagination } from "@/heroes/custom/CustomPagination"
 import { useSearchParams } from "react-router"
 import { useHeroeSummary } from "@/heroes/hooks/useHeroeSummary"
 import { usePaginatedHeroe } from "@/heroes/hooks/usePaginatedHeroe"
 import { CustomBreadcrumbs } from "@/heroes/custom/CustomBreadCrumb"
+import { FavoriteHeroeContext } from "@/heroes/context/FavoriteHeroeContext"
 export const HomePage = () => {
+
+    const { favoriteHeroesCount, favoriteHeroes } = use(FavoriteHeroeContext)
+
     const [searchParams, setSearchParams] = useSearchParams();
 
     const activeTab = searchParams.get('tab') ?? 'all';
@@ -25,6 +29,8 @@ export const HomePage = () => {
 
     const { data: heroesResponse } = usePaginatedHeroe(page, limit, category);
     const { data: summary } = useHeroeSummary();
+
+
 
     return (
         <>
@@ -65,7 +71,7 @@ export const HomePage = () => {
                             })
                         }
                     >
-                        Favorites (3)
+                        Favorites ({favoriteHeroesCount})
                     </TabsTrigger>
                     <TabsTrigger
                         value="heroes"
@@ -101,8 +107,8 @@ export const HomePage = () => {
                 </TabsContent>
                 <TabsContent value="favorites">
                     {/* Mostrar todos los personajes favoritos */}
-                    <h1>Favoritos!!!</h1>
-                    {/* <HeroGrid heroes={heroesResponse?.heroes ?? []} /> */}
+
+                    <HeroGrid heroes={favoriteHeroes ?? []} />
                 </TabsContent>
                 <TabsContent value="heroes">
                     {/* Mostrar todos los héroes */}

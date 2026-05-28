@@ -87,7 +87,7 @@ export default function HeroesPage() {
                                 <div className="text-3xl font-bold text-yellow-400">{averagePower}%</div>
                                 <div className="text-sm text-gray-300">Nivel de Poder</div>
                                 <div className="flex justify-center mt-2">
-                                    {[...Array(5)].map((_, i) => (
+                                    {Array.from({ length: 5 }, (_, i) => (
                                         <Star
                                             key={i}
                                             className={`w-4 h-4 ${i < Math.floor(averagePower / 20) ? "text-yellow-400 fill-current" : "text-gray-400"}`}
@@ -233,8 +233,8 @@ export default function HeroesPage() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                     {superheroData.powers.map((power, index) => (
                                         <div
-                                            key={index}
-                                            className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200"
+                                            key={power + index}
+                                            className="bg-linear-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200"
                                         >
                                             <div className="flex items-center gap-3">
                                                 <div className="bg-blue-500 p-2 rounded-full">

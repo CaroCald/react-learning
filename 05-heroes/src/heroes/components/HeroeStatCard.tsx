@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Heart } from 'lucide-react'
 import React, { type PropsWithChildren } from 'react'
 
 interface HeroeStatCardProps extends PropsWithChildren {
