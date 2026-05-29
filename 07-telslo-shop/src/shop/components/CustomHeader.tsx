@@ -5,8 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Link, useParams, useSearchParams } from 'react-router';
 import { cn } from '@/lib/utils';
 import { CustomLogo } from '@/components/custom/CustomLogo';
+import { useAuthStore } from '@/auth/store/auth.store';
 
 export const CustomHeader = () => {
+  const { authStatus, isAdmin, logout } = useAuthStore();
   const [searchParams, setSearchParams] = useSearchParams();
   const { gender } = useParams();
 
@@ -93,18 +95,33 @@ export const CustomHeader = () => {
             <Button variant="ghost" size="icon" className="md:hidden">
               <Search className="h-5 w-5" />
             </Button>
+            {
+              authStatus === 'authenticated' ? (
+                <Button
+                  onClick={logout}
+                  variant="default" size="sm" className="ml-2">
+                  Cerrar Sesion
+                </Button>
+              ) : (
+                <Link to="/auth/login">
+                  <Button variant="default" size="sm" className="ml-2">
+                    Login
+                  </Button>
+                </Link>
+              )
+            }
+            {
+              isAdmin() && (
+                <Link to="/admin">
+                  <Button variant="destructive" size="sm" className="ml-2">
+                    Admin
+                  </Button>
+                </Link>
+              )
+            }
 
-            <Link to="/auth/login">
-              <Button variant="default" size="sm" className="ml-2">
-                Login
-              </Button>
-            </Link>
 
-            <Link to="/admin">
-              <Button variant="destructive" size="sm" className="ml-2">
-                Admin
-              </Button>
-            </Link>
+
           </div>
         </div>
       </div>
