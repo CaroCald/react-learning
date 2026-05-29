@@ -1,41 +1,33 @@
-import { useAuthStore } from "@/auth/store/auth.store";
-import type { PropsWithChildren } from "react";
-import { Navigate } from "react-router";
+import { useAuthStore } from '@/auth/store/auth.store';
+import type { PropsWithChildren } from 'react';
+import { Navigate } from 'react-router';
 
+export const AuthenticatedRoute = ({ children }: PropsWithChildren) => {
+  const { authStatus } = useAuthStore();
+  if (authStatus === 'checking') return null;
 
-const AuthenticatedRoutes = ({ children }: PropsWithChildren) => {
+  if (authStatus === 'not-authenticated') return <Navigate to="/auth/login" />;
 
-    const { authStatus } = useAuthStore()
+  return children;
+};
 
-    if (authStatus === "checking") return null
+export const NotAuthenticatedRoute = ({ children }: PropsWithChildren) => {
+  const { authStatus } = useAuthStore();
+  if (authStatus === 'checking') return null;
 
-    if (authStatus === "not-authenticated") return <Navigate to="/auth/login"></Navigate>
-    return children
+  if (authStatus === 'authenticated') return <Navigate to="/" />;
 
-}
+  return children;
+};
 
-const NotAuthenticatedRoutes = ({ children }: PropsWithChildren) => {
+export const AdminRoute = ({ children }: PropsWithChildren) => {
+  const { authStatus, isAdmin } = useAuthStore();
 
-    const { authStatus } = useAuthStore()
+  if (authStatus === 'checking') return null;
 
-    if (authStatus === "checking") return null
+  if (authStatus === 'not-authenticated') return <Navigate to="/auth/login" />;
 
-    if (authStatus === "authenticated") return <Navigate to="/"></Navigate>
-    return children
+  if (!isAdmin()) return <Navigate to="/" />;
 
-}
-
-const AdminRoutes = ({ children }: PropsWithChildren) => {
-
-    const { authStatus, isAdmin } = useAuthStore()
-
-    if (authStatus === "checking") return null
-
-    if (authStatus === "not-authenticated") return <Navigate to="/auth/login"></Navigate>
-
-    if (!isAdmin()) return <Navigate to="/"></Navigate>
-    return children
-
-}
-
-export { AuthenticatedRoutes, NotAuthenticatedRoutes, AdminRoutes }
+  return children;
+};
